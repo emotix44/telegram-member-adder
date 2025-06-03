@@ -1,3 +1,18 @@
+import requests
+
+def check_remote_status():
+    try:
+        response = requests.get(
+            "https://raw.githubusercontent.com/emotix44/telegram-member-adder/main/status.txt"
+        )
+        if response.text.strip().upper() != "ON":
+            print("❌ Script has been disabled by the owner.")
+            exit()
+    except:
+        print("⚠️ Could not verify script status. Continuing anyway...")
+
+check_remote_status()
+
 import asyncio
 import json
 import os
