@@ -1,0 +1,15 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Telethon session files folder
+sessions/
+
+# Any local databases or cache files
+*.sqlite3
+
+# Config files that may contain secrets (optional, if you want)
+config.json
+accounts.json
+progress.json
+messaging.json
