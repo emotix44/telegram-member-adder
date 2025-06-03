@@ -1,0 +1,7 @@
+  GNU nano 8.4                                   config.json
+{
+  "source_group": "https://t.me/sourcegroupusername",
+  "dest_group": "https://t.me/yourgroupusername",
+  "limit_per_day": 10,
+  "last_run_date": "2025-06-03"
+}
