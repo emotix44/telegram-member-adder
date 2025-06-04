@@ -36,29 +36,40 @@ BANNER = """
 [/bold dark_orange]
 """
 
+# ========== Remote Kill Switch ==========
+def check_status_online():
+    try:
+        url = 'https://raw.githubusercontent.com/emotix44/telegram-member-adder/main/status.txt'
+        response = requests.get(url)
+        if response.status_code == 200:
+            if response.text.strip().lower() == 'off':
+                print("\n🛑 Script is disabled by owner. Exiting...")
+                exit()
+            else:
+                print("✅ Remote switch is ON. Continuing...\n")
+        else:
+            print(f"⚠️ Failed to fetch remote status. HTTP {response.status_code}")
+    except Exception as e:
+        print(f"⚠️ Error checking remote status: {e}")
+
+check_status_online()
+
+# ========== Local Kill Switch Monitor ==========
 class KillSwitchMonitor(threading.Thread):
-    def __init__(self):
-        super().__init__(daemon=True)
-        self.active = False
-        
+    def __init__(self, filename='kill_switch.txt'):
+        super().__init__()
+        self.filename = filename
+        self.running = True
+
     def run(self):
-        while not self.active:
-            self.check_kill_switch()
-            time.sleep(CHECK_INTERVAL)
-    
-    def check_kill_switch(self):
-        try:
-            res = requests.get(KILL_SWITCH_URL, timeout=5)
-            if res.ok and "OFF" in res.text.upper():
-                print("\n🛑 Script has been remotely disabled!")
-                self.active = True
-                self.stop_script()
-        except requests.RequestException:
-            print("⚠️ Kill switch unreachable. Continuing...")
-    
-    def stop_script(self):
-        print("💀 Exiting due to kill switch trigger...")
-        sys.exit()
+        while self.running:
+            if os.path.exists(self.filename):
+                with open(self.filename, 'r') as f:
+                    status = f.read().strip().lower()
+                    if status == 'off':
+                        print("\n🛑 Local kill switch activated. Exiting...")
+                        os._exit(1)
+            time.sleep(5)
 
 class ConfigManager:
     def __init__(self):
