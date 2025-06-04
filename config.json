@@ -1,7 +1,12 @@
-  GNU nano 8.4                                   config.json
 {
-  "source_group": "https://t.me/sourcegroupusername",
-  "dest_group": "https://t.me/yourgroupusername",
+  "api_id": "your_api_id_here",
+  "api_hash": "your_api_hash_here",
+  "phone_number": "+1234567890",
+  "source_group": "source_group_username",
+  "dest_group": "destination_group_username",
   "limit_per_day": 10,
-  "last_run_date": "2025-06-03"
+  "delay_between_adds": 15,
+  "message_delay": 5,
+  "message_limit": 20,
+  "last_run_date": ""
 }
